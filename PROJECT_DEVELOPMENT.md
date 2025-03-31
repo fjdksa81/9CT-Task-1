@@ -10,3 +10,9 @@ I need to design and code a program for an EV3 robot to navigate a map and move 
 
 ### Key Actions 
 
+- Use a pressure sensor to detect when a required block is connected
+- Use a colour sensor to detect the colour of an encountered block
+- Move forward until it reaches the edge of the mat/reach a block
+- Take a set path around a block
+- 
+
