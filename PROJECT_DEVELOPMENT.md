@@ -66,3 +66,27 @@ I need to design and code a program for an EV3 robot to navigate a map and move 
 - The robot should find it's path without extra movement un-needed.
 - The robot should move around dangerous blocks without undue delay.
 - The robot should aim to grab and pickup the block without a large number of undue tries.
+
+## Part III - Development and Testing
+
+
+The test program used to test the movement of the sensor movement mechanism's various iterations.
+```python
+ #!/usr/bin/env pybricks-micropython
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+from pybricks.media.ev3dev import SoundFile, ImageFile
+
+sensor_motor = Motor(Port.A)
+
+"""Used to test the movement of the colour sensor's motor, using run_angle to move the motor at 
+a speed of 90 degrees per second for 270 degrees, to stop the motor from hitting the ground or the wheels.
+It then moves it back to it's previous posiiton and corrects the movements."""
+
+sensor_motor.run_angle(90, 270)
+sensor_motor.run_angle(90, -270) 
+```
