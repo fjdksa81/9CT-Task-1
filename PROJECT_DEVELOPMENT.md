@@ -90,3 +90,19 @@ It then moves it back to it's previous position."""
 sensor_motor.run_angle(90, 90)
 sensor_motor.run_angle(90, -90) 
 ```
+
+The test program used to test the color sensor's color sensing ability.
+
+```
+"""Tests the colour sensor, to detect the two good blocks (red or yellow), making one beep
+unrecognised blocks or undetect makes two beeps."""
+
+
+if colour_sensor.color() == Color.RED or Color.YELLOW:
+    #pick up here
+    speaker.beep()
+else:
+    #move back here and turn 90 degrees
+    speaker.beep()
+    speaker.beep()
+```
