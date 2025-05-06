@@ -21,29 +21,35 @@ ultrasonic_sensor = UltrasonicSensor(Port.S2)
 a speed of 90 degrees per second for 90 degrees, to stop the motor from hitting the ground or the wheels.
 It then moves it back to it's previous posiiton and corrects the movements."""
 
-sensor_motor.run_angle(90, 90)
-sensor_motor.run_angle(90, -90)
+#sensor_motor.run_angle(90, 90)
+#sensor_motor.run_angle(90, -90)
 
 """Tests the colour sensor, to detect the two good blocks (red or yellow), making one beep
 unrecognised blocks or undetect makes two beeps."""
 
 
-if colour_sensor.color() == Color.RED or Color.YELLOW:
+#if colour_sensor.color() == Color.RED or Color.YELLOW:
     #pick up here
     ev3.speaker.beep()
 
-else:
+#else:
     #move back here and turn 90 degrees
     ev3.speaker.beep()
     wait(2000)
     ev3.speaker.beep()
-    ev3.speaker.beep(2000)
+    ev3.speaker.beep()
 
-while True:
-    robot.drive(200, 0)
 
-    while ultrasonic_sensor.distance() > 30:
-        wait(10)
 
-    robot.straight(-300)
-    robot.turn(120)
+
+while ultrasonic_sensor > 30:
+    robot.straight(20)
+    robot.turn(30)
+    if ultrasonic_sensor > 30:
+        break
+    robot.turn(-60)
+    if ultrasonic_sensor > 30:
+        break
+    robot.turn(30)
+    if ultrasonic_sensor > 30:
+        break
