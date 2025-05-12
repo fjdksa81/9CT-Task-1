@@ -15,7 +15,12 @@ right_motor = Motor(Port.C)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
 colour_sensor = ColorSensor(Port.S3)
 ultrasonic_sensor = UltrasonicSensor(Port.S2)
+BLACK = 9
+WHITE = 85
+threshold = (BLACK + WHITE) / 2
+block_grabbed = True
 
+# FOLLOW KDOTFUNNIES ON TWITTER FOR MORE KDOT MEMES
 
 """Used to test the movement of the colour sensor's motor, using run_angle to move the motor at 
 a speed of 90 degrees per second for 90 degrees, to stop the motor from hitting the ground or the wheels.
@@ -42,7 +47,7 @@ unrecognised blocks or undetect makes two beeps."""
 
 
 
-while ultrasonic_sensor > 30:
+# while ultrasonic_sensor > 30:
     robot.straight(20)
     robot.turn(30)
     if ultrasonic_sensor > 30:
@@ -53,3 +58,18 @@ while ultrasonic_sensor > 30:
     robot.turn(30)
     if ultrasonic_sensor > 30:
         break
+
+#MUSTAAAARD
+if block_grabbed == True:
+    while colour_sensor.color() == Color.WHITE:
+       robot.straight(2.5)
+
+    deviation = colour_sensor.reflection() - threshold
+
+    turn_rate = 1.2 * deviation
+
+    robot.drive(100, turn_rate)
+
+    wait(10)
+else:
+    ev3.speaker.beep()
