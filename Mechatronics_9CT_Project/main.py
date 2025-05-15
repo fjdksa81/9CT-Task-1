@@ -19,8 +19,11 @@ BLACK = 9
 WHITE = 85
 threshold = (BLACK + WHITE) / 2
 block_grabbed = False
-detect_distance = 300 #150mm
-check_block_distance = 80 #5mm
+block_found = False
+detect_distance = 300
+check_block_distance = 80
+current_color = colour_sensor.color()
+block_counter = 0
 
 
 
@@ -63,76 +66,73 @@ unrecognised blocks or undetect makes two beeps."""
     if ultrasonic_sensor > 30:
         break
 
-
-
-
-while True:
-    #finding block
-    counter = 60
-    found_block = False
-    while found_block == False:
-        while counter > 0:
-           ev3.screen.print("Finding block")
-           ev3.screen.print(counter)
-
-           counter -= 1
-           robot.turn(3)
-           ev3.screen.clear()
-
-           if ultrasonic_sensor.distance() < detect_distance:
-               found_block = True
-               ev3.screen.print("Block found")
+def block_search()
+   global block_found
+   if block_grabbed = False and block_found = False:
+       while block_found == False 
+          counter1 = 30
+          counter2 = 60
+          while counter1 > 0:
+            counter1 -= 1
+            robot.turn(3)
+            if ultrasonic_sensor.distance() < detect_distance:
+               block_found = True
                break
-        ev3.straight(10)
+          while counter2 > 0:
+            counter2 -= 1
+            robot.turn(-3)
+            if ultrasonic_sensor.distance() < detect_distance:
+               block_found = True
+               break
+    
+          robot.turn(30)
+          ev3.straight(10)
 
-    wait(30)
 
-    #go to block
-    while ultrasonic_sensor.distance() > check_block_distance:
-        ev3.screen.print("Going to block")
-        ev3.screen.print(ultrasonic_sensor.distance())
-        robot.straight(2.5) #move forward 2.5mm
+def block_check()
+    global block_grabbed
+    global block_found
+    if block_found = True and block_grabbed = False:
+        while ultrasonic_sensor.distance() > check_block_distance:
+        robot.straight(2.5)
+    if current_color == Color.RED or Color.YELLOW:
+        wait(30)
+        ev3.straight(2.5)
+        sensor_motor.run_angle (90,90)
+         block_found = False
+         block_grabbed = True
+     else:
+        ev3.screen.print("Bad block found")
+        ev3.screen.print(current_color)
         ev3.screen.clear()
-    
-    wait(30)
-
-    #check block colour
-    while True:
-        sensor_motor.run_angle (90,-90)
-        current_color = colour_sensor.color()
-
-        wait(5)
-
-        if current_color == Color.RED or Color.YELLOW:
-            block_grabbed = True
-            wait(30)
-            ev3.straight(2.5)
-            sensor_motor.run_angle (90,90)
-            break
-        else:
-            ev3.screen.print("Bad block found")
-            ev3.screen.print(current_color)
-            ev3.screen.clear()
-            ev3.straight(-10)
-            ev3.turn(-90)
-            ev3.straight(10)
-            ev3.turn(90)
-            ev3.straight(20)
-            ev3.turn(10)
-            ev3.straight(10)
-            ev3.turn(-90)
-            sensor_motor.run_angle (90,90)
-            break
-
-    if block_grabbed == True:
-        while colour_sensor.color() == Color.WHITE:
-            robot.straight(2.5)
-    
+        ev3.straight(-10)
+        ev3.turn(-90)
+        ev3.straight(10)
+        ev3.turn(90)
+        ev3.straight(20)
+        ev3.turn(10)
+        ev3.straight(10)
+        ev3.turn(-90)
+        sensor_motor.run_angle (90,90)
+        block_found = False
+def block_return()
+  global block_grabbed 
+  colour_sensor_reflection = colour_sensor.reflection()
+  while colour_sensor_reflection > 60
     deviation = colour_sensor.reflection() - threshold
     turn_rate = 1.2 * deviation
-    robot.drive(100, turn_rate)
+    robot.drive(10, turn_rate)
     wait(10)
+    colour_sensor_reflection = colour_sensor_reflection()
+  robot.straight(-10)
+  robot.turn(90)
+  block_grabbed = False
+  block_counter =+ 1
 
-
-#end
-ev3.screen.print("Finished")
+# Main Loop
+while True:
+    block_search()
+    block_check()
+    block_return()
+    if block_counter == 2
+       break
