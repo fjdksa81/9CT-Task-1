@@ -20,12 +20,10 @@ WHITE = 85
 threshold = (BLACK + WHITE) / 2
 block_grabbed = False
 block_found = False
-detect_distance = 300
+detect_distance = 500
 check_block_distance = 80
 current_color = colour_sensor.color()
 block_counter = 0
-
-
 
 # FOLLOW KDOTFUNNIES ON TWITTER FOR MORE KDOT MEMES
 
@@ -75,12 +73,14 @@ def block_search():
           while counter1 > 0:
             counter1 -= 1
             robot.turn(3)
+            ev3.screen.print(ultrasonic_sensor.distance())
             if ultrasonic_sensor.distance() < detect_distance:
                block_found = True
                break
           while counter2 > 0:
             counter2 -= 1
             robot.turn(-3)
+            ev3.screen.print(ultrasonic_sensor.distance())
             if ultrasonic_sensor.distance() < detect_distance:
                block_found = True
                break
