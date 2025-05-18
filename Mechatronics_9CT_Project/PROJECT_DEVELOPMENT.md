@@ -113,6 +113,7 @@ END
 ```
 BEGIN
    WHILE block_found = True and block_grabbed = False
+      READ ultrasonic_sensor
       WHILE ultrasonic_sensor > check_distance
         Move forward 2.5 centimeters
         READ ultrasonic_sensor
@@ -137,7 +138,11 @@ END
 ```
 ### Flowcharts
 
+![Main Loop](/Images/mainloop%20flowchart.png "Main Loop")
 
+![block_search](/Images/block_search%20flowchart.png "block_search")
+
+![block_check](/Images/block_check%20flowchart.png "block_check")
 
 ## Part III - Development and Testing
 
